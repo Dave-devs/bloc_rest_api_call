@@ -7,7 +7,7 @@ class UserRepository {
   Future<List<User>> fetchUserData() async {
     Response response = await get(Uri.parse(endpoint));
     if(response.statusCode == 200) {
-      final List result = jsonDecode(response.body)['data'];
+      final List result = jsonDecode(response.body);
       return result.map((e) => User.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);

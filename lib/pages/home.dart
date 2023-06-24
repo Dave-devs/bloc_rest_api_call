@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Rest Api With Bloc'),
+          centerTitle: true
         ),
         body: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
@@ -27,43 +28,41 @@ class HomePage extends StatelessWidget {
             }
             if(state is UserDataState) {
               List<User> userList = state.users;
-              return Column(
-                children: [
-                  Expanded(child: ListView.builder(
-                    itemCount: state.users.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => DetailPage(e: userList[index],))
-                          );
-                        },
-                        child: Card(
-                          color: Colors.blueAccent,
-                          elevation: 4,
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: ListTile(
-                            leading: Text(
-                                userList[index].id,
-                                style: const TextStyle(color: Colors.white),
-                            ),
-                            title: Text(
-                                userList[index].firstName,
-                                style: const TextStyle(color: Colors.white),
-                            ),
-                            subtitle: Text(
-                                userList[index].lastName,
-                                style: const TextStyle(color: Colors.white),
-                            ),
-                            trailing: CircleAvatar(
-                              backgroundImage: NetworkImage(userList[index].avatar),
+              return Expanded(
+                child: ListView.builder(
+                      itemCount: state.users.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => DetailPage(e: userList[index],))
+                            );
+                          },
+                          child: Card(
+                            color: Colors.blueAccent,
+                            elevation: 4,
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: ListTile(
+                              leading: Text(
+                                  userList[index].id,
+                                  style: const TextStyle(color: Colors.white),
+                              ),
+                              title: Text(
+                                  userList[index].firstName,
+                                  style: const TextStyle(color: Colors.white),
+                              ),
+                              subtitle: Text(
+                                  userList[index].lastName,
+                                  style: const TextStyle(color: Colors.white),
+                              ),
+                              trailing: CircleAvatar(
+                                backgroundImage: NetworkImage(userList[index].avatar),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ))
-                ],
+                        );
+                      },
+                ),
               );
             }
             if(state is UserErrorState) {
